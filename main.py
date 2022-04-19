@@ -1,5 +1,9 @@
 import pytesseract 
 from PIL import Image
+from interface import Ui_MainWindow
+
+from PyQt5 import  QtWidgets
+
 class Text:
     pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe" 
     
@@ -12,9 +16,31 @@ class Text:
 
     def text(self,img):
         print(pytesseract.image_to_string(img, config = self.config, lang = "rus"))
+        return pytesseract.image_to_string(img, config = self.config, lang = "rus")
 
 
-a = Text()
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
 
-res = a.open_file(r'C:\Users\User\Documents\im.png')
-a.text(res)
+        self.pushButton_3.clicked.connect(self.showDi)
+        
+
+    def showDi(self):
+        
+        fname = QtWidgets.QFileDialog.getOpenFileName(None, 'Open file', './', '(*.jpg)')[0]
+        print(fname)
+        work = Text()
+        path = work.open_file(fname)
+        text = work.text(path)
+        self.textEdit.setText(text)
+
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    w = MainWindow()
+    w.show()
+    sys.exit(app.exec_())

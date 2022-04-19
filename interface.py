@@ -60,27 +60,3 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "PushButton"))
         self.pushButton_3.setText(_translate("MainWindow", "Загрузить Изображение"))
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-
-        self.pushButton_3.clicked.connect(self.showDi)
-        
-
-    def showDi(self):
-        
-        fname = QtWidgets.QFileDialog.getOpenFileName(None, 'Open file', './', '(*.jpg)')[0]
-
-        if fname :
-            print(fname)
-
-
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    w = MainWindow()
-    w.show()
-    sys.exit(app.exec_())
