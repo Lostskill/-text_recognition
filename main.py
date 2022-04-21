@@ -15,28 +15,32 @@ class Text:
         return self.img
 
     def text(self,img):
-        print(pytesseract.image_to_string(img, config = self.config, lang = "rus"))
+        #print(pytesseract.image_to_string(img, config = self.config, lang = "rus"))
         return pytesseract.image_to_string(img, config = self.config, lang = "rus")
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.setupUi(self)
-
-        self.pushButton_3.clicked.connect(self.showDi)
         
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.ui.pushButton_3.clicked.connect(self.showDi)
+        self.ui.pushButton_4.clicked.connect(self.recognition)
 
     def showDi(self):
         
-        fname = QtWidgets.QFileDialog.getOpenFileName(None, 'Open file', './', '(*.jpg)')[0]
-        print(fname)
+        self.fname = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file', './', '(*.jpg)')[0]
+        return self.fname
+        print(self.fname)
+ 
+
+    def recognition(self):
         work = Text()
-        path = work.open_file(fname)
+        path = work.open_file(self.fname)
         text = work.text(path)
-        self.textEdit.setText(text)
-
-
+        print(text)
+        self.ui.textEdit.setText(text)
 
 if __name__ == "__main__":
     import sys
