@@ -15,7 +15,6 @@ class Text:
         return self.img
 
     def text(self,img):
-        #print(pytesseract.image_to_string(img, config = self.config, lang = "rus"))
         return pytesseract.image_to_string(img, config = self.config, lang = "rus")
 
 
